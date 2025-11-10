@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  app:
+    build: ./app
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./app/init.sql:/init.sql
+
+  db:
+    image: mariadb:11
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
