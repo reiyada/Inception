@@ -1,0 +1,32 @@
+services:
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+    image: mariadb
+    env_file:
+      - .env
+    secrets:
+      - db_root_password
+      - db_password
+    volumes:
+      - /home/ryada/data/mariadb:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+secrets:
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  db_password:
+    file: ../secrets/db_password.txt
