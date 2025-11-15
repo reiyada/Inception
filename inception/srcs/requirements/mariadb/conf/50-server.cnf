@@ -1,0 +1,16 @@
+[mysqld]
+user=mysql
+# runs the DB server with the mysql user 
+bind-address=0.0.0.0
+port=3306
+
+skip-name-resolve
+# avoid DNS lookups
+
+innodb_file_per_table=1
+# safer storage mode, keep tables in seoarate .ibd files
+
+character-set-server=utf8mb4
+# required to set this for emojis in wordpress
+collation-server=utf8mb4_unicode_ci
+# storing rules for utf8mb4

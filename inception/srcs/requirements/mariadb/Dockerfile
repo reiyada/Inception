@@ -5,9 +5,9 @@ FROM debian:bookworm
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-      mariadb-server mariadb-client ca-certificates bash tini \
- && rm -rf /var/lib/apt/lists/*
+     && apt-get install -y --no-install-recommends \
+     mariadb-server mariadb-client ca-certificates bash tini \
+     && rm -rf /var/lib/apt/lists/*
 
 #Config + entrypoint
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf

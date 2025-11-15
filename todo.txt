@@ -1,0 +1,2 @@
+- create the volume holders (/home/ryada/data/mariadb)
+- give all the permission to the volume holders 755

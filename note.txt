@@ -1,0 +1,62 @@
+Makefile  
+    ↓
+docker-compose.yml  
+    ↓
+builds mariadb/ directory  
+    ↓
+Dockerfile  
+    → install mariadb  
+    → copy config  
+    → copy init script  
+    → set entrypoint  
+
+Start container  
+    ↓
+Mount secrets into /run/secrets  
+Mount volume into /var/lib/mysql  
+    ↓
+init-mariadb.sh runs  
+    ↓
+IF database empty:
+    - initialize  
+    - create user  
+    - create database  
+    - set root password  
+    - configure  
+    ↓
+Finally starts mariadbd (real server)
+
+
+
+
+
++----------------------+       +----------------------+
+| YOUR VM (Host)       | <---> | MARIADB CONTAINER    |
+| /home/ryada/data     |       | /var/lib/mysql       |
+|        /mariadb       |       |                      |
++----------------------+       +----------------------+
+    -> we need the volume holder bc once we delete the container, the things we saved in it will be gone as well
+
+
+
+
+Your VM (build context)
+-------------------------------
+mariadb/
+├── conf/
+│   └── 50-server.cnf
+└── tools/
+    └── init-mariadb.sh
+
+
+Inside container after COPY
+-------------------------------
+/etc/mysql/mariadb.conf.d/
+    └── 50-server.cnf
+
+/usr/local/bin/
+    └── init-mariadb.sh   (executable script)
+    -> A container is a isolated system, so i does not check the host files as long as you dont copy them into the containers
+
+
+
